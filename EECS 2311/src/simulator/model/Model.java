@@ -1,4 +1,4 @@
-package simulator;
+package simulator.model;
 
 public class Model {
 	//Need to add functionality 

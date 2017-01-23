@@ -33,7 +33,8 @@ public enum BrailleConvert {
     W(new boolean[] {false, true, false, false, true, true, true, false}),
     X(new boolean[] {true, false, true, false, true, false, true, false}),
     Y(new boolean[] {true, false, true, false, true, true, true, false}),
-    Z(new boolean[] {true, false, true, false, true, true, false, false});
+    Z(new boolean[] {true, false, true, false, true, true, false, false}),
+    RESET(new boolean[] {false, false, false, false, false, false, false, false});
 
     private boolean[] pinStates;
 

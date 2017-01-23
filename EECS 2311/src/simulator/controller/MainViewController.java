@@ -37,10 +37,13 @@ public class MainViewController {
 				setBrailleCellState(1, BrailleConvert.F.getPinStates());
 				break;
 			case 2:
+				setBrailleCellState(2, BrailleConvert.X.getPinStates());
 				break;
 			case 3:
+				setBrailleCellState(3, BrailleConvert.H.getPinStates());
 				break;
 			case 4:
+				resetAllBrailleCells();
 				break;
 			default:
 				System.out.println("No action to handle button " + button + ".");
@@ -55,6 +58,12 @@ public class MainViewController {
 		}
 	}
 
+	public void resetAllBrailleCells() {
+		for(int i = 0; i < brailleCells.length; i++) {
+			brailleCells[i].setPinStates(BrailleConvert.RESET.getPinStates());
+			view.refreshBrailleCell(i);
+		}
+	}
 	/**
 	 * Called when a braille cell is initialized by the view.
 	 * This method will create the corresponding BrailleCell instance

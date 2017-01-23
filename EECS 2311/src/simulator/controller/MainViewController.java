@@ -2,6 +2,7 @@ package simulator.controller;
 
 import simulator.Settings;
 import simulator.model.BrailleCell;
+import simulator.model.BrailleConvert;
 import simulator.view.MainView;
 
 /**
@@ -30,12 +31,10 @@ public class MainViewController {
 		System.out.println("Button "+ button +" pressed.");
 		switch(button) {
 			case 0:
-				boolean[] pinState1 = new boolean[] {true, true, false, false, true, false, true, false};
-				setBrailleCellState(0, pinState1);
+				setBrailleCellState(0, BrailleConvert.A.getPinStates());
 				break;
 			case 1:
-				boolean[] pinState2 = new boolean[] {false, false, false, false, false, false, false, false};
-				setBrailleCellState(0, pinState2);
+				setBrailleCellState(1, BrailleConvert.F.getPinStates());
 				break;
 			case 2:
 				break;

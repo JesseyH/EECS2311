@@ -25,5 +25,4 @@ public class Simulator {
 	public static MainViewController getMainViewController() {
 	    return mainViewController;
     }
-
 }

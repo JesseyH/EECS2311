@@ -6,7 +6,8 @@ import simulator.model.BrailleConvert;
 import simulator.view.MainView;
 
 /**
- * Controller for the MainView.
+ * Controller for the MainView. With this controller you can control
+ * every aspect of the simulator.
  */
 public class MainViewController {
 
@@ -51,13 +52,39 @@ public class MainViewController {
 		}
 	}
 
-	public void setBrailleCellState(int id, boolean[] pinStates) {
-		if(id >= 0 && id < brailleCells.length) {
+    /**
+     * Gets the pinStates boolean array containing the values
+     * of every pin for the braille cell with the given ID.
+     * @param id The ID Of the braille cell.
+     * @return The pinStates boolean array or NULL if the ID passed
+     * is not being used by any braille cell.
+     */
+	public boolean[] getBrailleCellState(int id) {
+	    if(id >= 0 && id < brailleCells.length) {
+            return brailleCells[id].getPinStates();
+        }
+        return null;
+    }
+
+	/**
+	 * Sets the specified braille cell to the given pin states.
+	 * @param id The ID of the braille cell
+	 * @param pinStates The boolean array containing pin states of all 8 pins.
+	 * @return True if the braille cell with the given ID was set to the given
+     * pinStates boolean array. False if an unused ID or incorrect pinStates array was passed.
+	 */
+	public boolean setBrailleCellState(int id, boolean[] pinStates) {
+		if(id >= 0 && id < brailleCells.length && pinStates.length == 8) {
 			brailleCells[id].setPinStates(pinStates);
 			view.refreshBrailleCell(id);
+			return true;
 		}
+		return false;
 	}
 
+	/**
+	 * Resets all braille cells to have all pins down.
+	 */
 	public void resetAllBrailleCells() {
 		for(int i = 0; i < brailleCells.length; i++) {
 			brailleCells[i].setPinStates(BrailleConvert.RESET.getPinStates());
@@ -66,10 +93,9 @@ public class MainViewController {
 	}
 	/**
 	 * Called when a braille cell is initialized by the view.
-	 * This method will create the corresponding BrailleCell instance
-	 * from the model.
+	 * This method will create the corresponding BrailleCell model instance.
 	 * @param id The id of the braille cell that was initialized.
-	 * @return The BrailleCell obejct that was created.
+	 * @return The BrailleCell model object that was created.
 	 */
 	public BrailleCell createBrailleCell(int id) {
 		brailleCells[id] = new BrailleCell(id);

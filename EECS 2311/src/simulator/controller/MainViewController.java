@@ -2,12 +2,13 @@ package simulator.controller;
 
 import simulator.Settings;
 import simulator.model.BrailleCell;
-import simulator.model.BrailleConvert;
+import simulator.BrailleConvert;
 import simulator.view.MainView;
 
 /**
- * Controller for the MainView. With this controller you can control
- * every aspect of the simulator.
+ * Controller for the MainView.
+ * To get the instance of this controller use Simulator.getController().
+ * With this controller you can control every aspect of the simulator.
  */
 public class MainViewController {
 

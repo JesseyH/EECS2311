@@ -3,8 +3,8 @@ package simulator;
 import simulator.controller.MainViewController;
 
 /**
- * Main class that initializes all controllers and provides
- * getters for each controller.
+ * Main class that initializes the MainViewController which controls
+ * the state of the simulator.
  */
 public class Simulator {
 
@@ -20,9 +20,11 @@ public class Simulator {
 
     /**
      * Getter for the MainViewController.
+	 * By accessing this controller you are able to control every
+	 * aspect of the simulator.
      * @return Instance of MainViewController.
      */
-	public static MainViewController getMainViewController() {
+	public static MainViewController getController() {
 	    return mainViewController;
     }
 }

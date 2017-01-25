@@ -1,8 +1,9 @@
-package simulator.model;
+package simulator;
 
 /**
- * Enum containing a boolean array representing pin states for a braille cell
- * mapped to a character.
+ * Enum that maps characters to braille.
+ * You can get the pin states boolean array for any letter by calling
+ * BrailleConvert.LETTER_HERE.getPinStates();
  */
 public enum BrailleConvert {
 

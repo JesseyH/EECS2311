@@ -2,14 +2,11 @@ package simulator.view;
 
 import simulator.model.BrailleCell;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("serial")
 public class BrailleCellView extends JPanel {
@@ -70,7 +67,7 @@ public class BrailleCellView extends JPanel {
             if (pinState[i]) {
                 pin[i].setIcon(raised);
             } else {
-                pin[i].setBackground(null);
+                pin[i].setIcon(lowered);
             }
         }
     }

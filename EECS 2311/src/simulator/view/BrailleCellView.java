@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
@@ -15,6 +16,8 @@ public class BrailleCellView extends JPanel {
 
     private BrailleCell brailleCell;
 	private JLabel pin[] = new JLabel[8];
+	private ImageIcon lowered = new ImageIcon("src/simulator/view/lowered.png");
+	private ImageIcon raised = new ImageIcon("src/simulator/view/raised.png");
 
 	/**
 	 * Constructor for the braille cell view.
@@ -27,7 +30,7 @@ public class BrailleCellView extends JPanel {
 		makePin();
         refreshPins();
 
-		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		//setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		setPreferredSize(new Dimension(50, 100));
 		setMaximumSize(new Dimension(50, 100));
 	}
@@ -43,7 +46,7 @@ public class BrailleCellView extends JPanel {
 			pin[i] = new JLabel();
 			pin[i].setPreferredSize(new Dimension(25, 25));
 			pin[i].setMaximumSize(new Dimension(25, 25));
-			pin[i].setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+			pin[i].setIcon(lowered);
 			if (i < 4) {
 				col1.add(pin[i]);
 			} else {
@@ -65,7 +68,7 @@ public class BrailleCellView extends JPanel {
 
         for (int i = 0; i < pinState.length; i++) {
             if (pinState[i]) {
-                pin[i].setBackground(Color.black);
+                pin[i].setIcon(raised);
             } else {
                 pin[i].setBackground(null);
             }

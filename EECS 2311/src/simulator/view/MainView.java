@@ -3,13 +3,12 @@ package simulator.view;
 import simulator.controller.MainViewController;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class MainView extends JFrame implements ActionListener{
+public class MainView extends JFrame{
 
     private MainViewController controller;
 
@@ -20,13 +19,16 @@ public class MainView extends JFrame implements ActionListener{
 	private JButton[] buttons;
 	private JPanel cellPanel;
 	private JPanel buttonPanel;
+	private ActionListener listener;
 
     /**
      * Constructor for the main view
+     * 
      */
-	public MainView(MainViewController controller, int numOfCells, int numOfButtons) {
+	public MainView(MainViewController controller, int numOfCells, int numOfButtons, ActionListener listener) {
 		super("Braille Simulator");
 		this.controller = controller;
+		this.listener = listener;
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(300, 250));
@@ -65,8 +67,8 @@ public class MainView extends JFrame implements ActionListener{
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i] = new JButton();
 			buttons[i].setText("" + i);
-			buttons[i].setActionCommand("BUTTON " + i);
-			buttons[i].addActionListener(this);
+			buttons[i].setActionCommand("" + i);
+			buttons[i].addActionListener(listener);
 			buttons[i].setPreferredSize(new Dimension(BUTTON_SIZE_X, BUTTON_SIZE_Y));
 			buttons[i].setMaximumSize(new Dimension(BUTTON_SIZE_X, BUTTON_SIZE_Y));
 
@@ -82,15 +84,6 @@ public class MainView extends JFrame implements ActionListener{
 	public void refreshBrailleCell(int id) {
         if(id >= 0 && id < brailleCellViews.length) {
             brailleCellViews[id].refreshPins();
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        for(int i = 0; i < buttons.length; i++) {
-            if(buttons[i] == e.getSource()) {
-                controller.buttonPressed(i);
-            }
         }
     }
 }

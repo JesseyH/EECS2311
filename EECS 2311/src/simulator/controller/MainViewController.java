@@ -2,6 +2,9 @@ package simulator.controller;
 
 import simulator.Settings;
 import simulator.model.BrailleCell;
+
+import java.awt.event.ActionListener;
+
 import simulator.BrailleConvert;
 import simulator.view.MainView;
 
@@ -18,39 +21,12 @@ public class MainViewController {
 	/**
 	 * Constructor for the MainViewController that initializes
 	 * the view with default settings from Settings class.
+	 * @param listener The listener to notify the Player App 
+	 * when a button was pressed.
 	 */
-	public MainViewController() {
+	public MainViewController(ActionListener listener) {
 		brailleCells = new BrailleCell[Settings.NUM_OF_CELLS];
-		view = new MainView(this, Settings.NUM_OF_CELLS, Settings.NUM_OF_BUTTONS);
-	}
-
-	/**
-	 * Handles what action to take when a button with the given button
-	 * index is pressed.
-	 * @param button The button index in the "buttons" array from the view.
-	 */
-	public void buttonPressed(int button) {
-		System.out.println("Button "+ button +" pressed.");
-		switch(button) {
-			case 0:
-				setBrailleCellState(0, BrailleConvert.A.getPinStates());
-				break;
-			case 1:
-				setBrailleCellState(1, BrailleConvert.F.getPinStates());
-				break;
-			case 2:
-				setBrailleCellState(2, BrailleConvert.X.getPinStates());
-				break;
-			case 3:
-				setBrailleCellState(3, BrailleConvert.H.getPinStates());
-				break;
-			case 4:
-				resetAllBrailleCells();
-				break;
-			default:
-				System.out.println("No action to handle button " + button + ".");
-				break;
-		}
+		view = new MainView(this, Settings.NUM_OF_CELLS, Settings.NUM_OF_BUTTONS, listener);
 	}
 
     /**
@@ -111,6 +87,7 @@ public class MainViewController {
 			view.refreshBrailleCell(i);
 		}
 	}
+	
 	/**
 	 * Called when a braille cell is initialized by the view.
 	 * This method will create the corresponding BrailleCell model instance.

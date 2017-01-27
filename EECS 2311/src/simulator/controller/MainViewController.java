@@ -84,6 +84,25 @@ public class MainViewController {
 	}
 
 	/**
+	 * Sets the braille cell with the given ID to the character passed.
+	 * @param id The ID of the braille cell to set.
+	 * @param toSet The string to set the braille cell to. String should have length == 1
+	 * @return True if the character passed was mapped to a braille cell configuration.
+	 */
+	public boolean setBrailCellState(int id, String toSet) {
+		if(id >= 0 && id < brailleCells.length && toSet.length() == 1) {
+			for(BrailleConvert letter : BrailleConvert.values()) {
+				if(letter.name().equalsIgnoreCase(toSet)) {
+					brailleCells[id].setPinStates(letter.getPinStates());
+					view.refreshBrailleCell(id);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Resets all braille cells to have all pins down.
 	 */
 	public void resetAllBrailleCells() {

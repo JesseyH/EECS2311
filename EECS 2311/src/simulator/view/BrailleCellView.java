@@ -13,8 +13,8 @@ public class BrailleCellView extends JPanel {
 
     private BrailleCell brailleCell;
 	private JLabel pin[] = new JLabel[8];
-	private ImageIcon lowered = new ImageIcon("src/simulator/view/lowered.png");
-	private ImageIcon raised = new ImageIcon("src/simulator/view/raised.png");
+	private ImageIcon lowered = new ImageIcon("lowered.png");
+	private ImageIcon raised = new ImageIcon("raised.png");
 
 	/**
 	 * Constructor for the braille cell view.

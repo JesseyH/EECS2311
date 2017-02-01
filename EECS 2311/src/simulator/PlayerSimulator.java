@@ -3,30 +3,12 @@ package simulator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import simulator.controller.MainViewController;
-
 public class PlayerSimulator implements ActionListener{
+	private Simulator simulator;
 	
-	private MainViewController controller;
-    
-    /**
-     * Returns the MainViewController used by the player.
-     * 
-     * @return the model
-     */
-    public MainViewController getContoller() {
-        return this.controller;
-    }
-
-    /**
-     * Sets the MainViewController used by the player.
-     * 
-     * @param model the model to set
-     */
-    public void setController(MainViewController controller) {
-        this.controller = controller;
-    }
-
+	public void setSimulator(Simulator simulator){
+		this.simulator = simulator;
+	}
     /**
      * Processes an event initiated by a user clicking on a button in an RPSView.
      * 
@@ -38,6 +20,6 @@ public class PlayerSimulator implements ActionListener{
     public void actionPerformed(ActionEvent e) {
     	String s = e.getActionCommand(); 
         System.out.println("Button " + s + " was pressed.");
-        this.getContoller().setBrailCellState(Integer.valueOf(s), "A");
+        simulator.setBrailleCellState(Integer.valueOf(s), "A");
     }
 }

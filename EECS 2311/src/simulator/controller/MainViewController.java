@@ -64,8 +64,9 @@ public class MainViewController {
 	 * @param id The ID of the braille cell to set.
 	 * @param toSet The string to set the braille cell to. String should have length == 1
 	 * @return True if the character passed was mapped to a braille cell configuration.
+	 * @throws Exception 
 	 */
-	public boolean setBrailCellState(int id, String toSet) {
+	public boolean setBrailleCellState(int id, String toSet){
 		if(id >= 0 && id < brailleCells.length && toSet.length() == 1) {
 			for(BrailleConvert letter : BrailleConvert.values()) {
 				if(letter.name().equalsIgnoreCase(toSet)) {

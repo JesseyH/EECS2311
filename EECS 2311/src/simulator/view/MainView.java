@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class MainView extends JFrame{
+public class MainView extends JFrame {
 
     private MainViewController controller;
 
@@ -32,14 +32,14 @@ public class MainView extends JFrame{
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(300, 250));
-        setResizable(false);
+        setResizable(true);
 
 		makeCells(numOfCells);
 		makeButtons(numOfButtons);
-		pack();
-
+		
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setVisible(true);
+		pack();
 	}
 
     /**

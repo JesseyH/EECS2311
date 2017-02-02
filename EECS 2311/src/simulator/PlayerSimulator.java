@@ -20,6 +20,10 @@ public class PlayerSimulator implements ActionListener{
     public void actionPerformed(ActionEvent e) {
     	String s = e.getActionCommand(); 
         System.out.println("Button " + s + " was pressed.");
-        simulator.setBrailleCellState(Integer.valueOf(s), "A");
+        if(s.equals("4")){
+        	simulator.resetAllBrailleCells();
+        } else {
+        	simulator.setBrailleCellState(Integer.valueOf(s), "A");
+        }
     }
 }

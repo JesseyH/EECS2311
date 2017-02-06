@@ -1,16 +1,13 @@
-package simulator.view;
-
-import simulator.model.BrailleCell;
+package simulator;
 
 import java.awt.Dimension;
-import java.io.File;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class BrailleCellView extends JPanel {
+class BrailleCellView extends JPanel {
 
     private BrailleCell brailleCell;
 	private JLabel pin[] = new JLabel[8];
@@ -20,7 +17,7 @@ public class BrailleCellView extends JPanel {
 	/**
 	 * Constructor for the braille cell view.
 	 */
-	public BrailleCellView(BrailleCell brailleCell) {
+	BrailleCellView(BrailleCell brailleCell) {
 		super();
 		this.brailleCell = brailleCell;
 
@@ -61,7 +58,7 @@ public class BrailleCellView extends JPanel {
     /**
      * Draws the proper background on each pin depending on state.
      */
-    public void refreshPins() {
+    void refreshPins() {
         boolean[] pinState = brailleCell.getPinStates();
 
         for (int i = 0; i < pinState.length; i++) {

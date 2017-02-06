@@ -1,16 +1,16 @@
-package simulator.exceptions;
+package simulator;
 
 /**
  * Exception should be thrown when there is an issue
  * with setting a braille cell state.
  */
-public class SetBrailleCellStateException extends Exception{
+class SetBrailleCellStateException extends Exception{
 
     /**
      * Constructor that calls super.
      * @param message Exception message.
      */
-    public SetBrailleCellStateException(String message) {
+    SetBrailleCellStateException(String message) {
         super (message);
     }
 

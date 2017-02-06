@@ -126,7 +126,7 @@ public class MainViewController {
      * The toSet String passed to this method must have a length of 1.
 	 * @param id The ID of the braille cell to set.
 	 * @param toSet The string to set the braille cell to. String should have length == 1
-	 * @return True if the character passed was mapped to a braille cell configuration.
+	 * @return True if the character passed was mapped to a braille cell configuration and succesfully set.
 	 */
 	public boolean setBrailleCellState(int id, String toSet) {
 	    try {

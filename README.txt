@@ -1,4 +1,4 @@
-1) The contents of the zip file are as follows:
+1) The contents of the project are as follows:
     - ApiJavaDoc: JavaDoc's for the API (only public methods).
     - EntireJavaDoc: JavaDoc's for the entire simulator project (private, package, protected and public methods).
     - src: Contains the source .java files for the Simulator.
@@ -10,4 +10,5 @@
 
 2) Please reference the API Java doc to use the simulator from another application ( ApiJavaDoc -> index.html ).
 3) Reference the entire java doc if you need to see the entire workings of the simulator ( EntireJavaDoc -> index.html ).
+4) EECS2031, Team 6's GitHub url: https://github.com/JesseyH/EECS2311
 

@@ -30,7 +30,13 @@ public class MainViewController {
      *
      * @param listener The ActionListener that will be applied to every button.
      */
-    private MainViewController(ActionListener listener) {
+    private MainViewController(ActionListener listener) throws SimulatorInitializationException {
+        if(mainViewController != null) {
+            throw new SimulatorInitializationException("The simulator has already been initialized!");
+        }
+        if(listener == null) {
+            throw new SimulatorInitializationException("The ActionListener passed to the initialize() method is null!");
+        }
         view = new MainView(this, listener);
         view.makeCells(Settings.NUM_OF_CELLS);
         view.makeButtons(Settings.NUM_OF_BUTTONS);
@@ -44,7 +50,19 @@ public class MainViewController {
      * @param numOfCells The number of braille cells to initialize the view with.
      * @param numOfButtons The number of buttons to initialize the view with.
      */
-    private MainViewController(ActionListener listener, int numOfCells, int numOfButtons) {
+    private MainViewController(ActionListener listener, int numOfCells, int numOfButtons) throws SimulatorInitializationException {
+        if(mainViewController != null) {
+            throw new SimulatorInitializationException("The simulator has already been initialized!");
+        }
+        if(listener == null) {
+            throw new SimulatorInitializationException("The ActionListener passed to the initialize() method is null!");
+        }
+        if(numOfCells <= 0) {
+            throw new SimulatorInitializationException("You cannot initialize the simulator with 0 or less braille cells.");
+        }
+        if(numOfButtons <= 0) {
+            throw new SimulatorInitializationException("You cannot initialize the simulator with 0 or less buttons.");
+        }
         view = new MainView(this, listener);
         view.makeCells(numOfCells);
         view.makeButtons(numOfButtons);
@@ -61,15 +79,12 @@ public class MainViewController {
      * @throws SimulatorInitializationException Exception thrown when the ActionListener passed is null or
      * the simulator has already been initialized.
      */
-    public static MainViewController initialize(ActionListener listener)
-            throws SimulatorInitializationException {
-        if(mainViewController != null) {
-            throw new SimulatorInitializationException("The simulator has already been initialized!");
-        }
-        if(listener == null) {
-            throw new SimulatorInitializationException("The ActionListener passed to the initialize() method is null!");
-        }
-        mainViewController = new MainViewController(listener);
+    public static MainViewController initialize(ActionListener listener) {
+        try {
+			mainViewController = new MainViewController(listener);
+		} catch (SimulatorInitializationException e) {
+			e.printStackTrace();
+		}
         return mainViewController;
     }
 
@@ -84,21 +99,12 @@ public class MainViewController {
      * @throws SimulatorInitializationException Exception thrown when either the ActionListener passed is null,
      * the simulator has already been initialized, the number of braille cells is <= 0, or the number of buttons is <= 0.
      */
-    public static MainViewController initialize(ActionListener listener, int numOfCells, int numOfButtons)
-            throws SimulatorInitializationException {
-        if(mainViewController != null) {
-            throw new SimulatorInitializationException("The simulator has already been initialized!");
-        }
-        if(listener == null) {
-            throw new SimulatorInitializationException("The ActionListener passed to the initialize() method is null!");
-        }
-        if(numOfCells <= 0) {
-            throw new SimulatorInitializationException("You cannot initialize the simulator with 0 or less braille cells.");
-        }
-        if(numOfButtons <= 0) {
-            throw new SimulatorInitializationException("You cannot initialize the simulator with 0 or less buttons.");
-        }
-        mainViewController = new MainViewController(listener, numOfCells, numOfButtons);
+    public static MainViewController initialize(ActionListener listener, int numOfCells, int numOfButtons) {
+        try {
+			mainViewController = new MainViewController(listener, numOfCells, numOfButtons);
+		} catch (SimulatorInitializationException e) {
+			e.printStackTrace();
+		}
         return mainViewController;
     }
 

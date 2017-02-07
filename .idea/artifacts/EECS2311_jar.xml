@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="EECS2311:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/EECS2311_jar</output-path>
+    <root id="archive" name="EECS2311.jar">
+      <element id="module-output" name="EECS2311" />
+    </root>
+  </artifact>
+</component>

@@ -1,8 +1,7 @@
 package simulator;
 
 /**
- * Exception that should be thrown when there are issues with the simulators
- * initial initialization.
+ * Exception that should be thrown when there are issues with the simulators' initialization.
  */
 public class SimulatorInitializationException extends Exception {
 

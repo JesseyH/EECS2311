@@ -1,7 +1,6 @@
 package simulator;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -120,52 +119,42 @@ public class MainView extends JFrame{
      * Sets the specified braille cell to the given pin states.
      * @param id The ID of the braille cell.
      * @param pinStates The boolean array containing pin states of all 8 pins.
-     * @return True if the braille cell with the given ID was set to the given
-     * pinStates boolean array. False if an unused ID or incorrect pinStates array was passed.
      */
-    boolean setBrailleCellState(int id, boolean[] pinStates) {
-        try {
+    void setBrailleCellState(int id, boolean[] pinStates)
+            throws BrailleCellStateException{
 
-            if(!(id >= 0 && id < brailleCells.length)) {
-                throw new SetBrailleCellStateException("The braille cell with ID " + id + " does not exist!");
-            }
-            if(pinStates.length != 8) {
-                throw new SetBrailleCellStateException("The pinStates boolean array must have a length of exactly 8.");
-            }
-
-            brailleCells[id].setPinStates(pinStates);
-            refreshBrailleCell(id);
-            return true;
-
-        } catch(SetBrailleCellStateException e) {
-            e.printStackTrace();
+        if(!(id >= 0 && id < brailleCells.length)) {
+            throw new BrailleCellStateException("The braille cell with ID " + id + " does not exist!");
         }
-        return false;
+        if(pinStates.length != 8) {
+            throw new BrailleCellStateException("The pinStates boolean array must have a length of exactly 8.");
+        }
+
+        brailleCells[id].setPinStates(pinStates);
+        refreshBrailleCell(id);
     }
 
     /**
      * Sets the braille cell with the given ID to the character passed.
      * @param id The ID of the braille cell to set.
      * @param toSet The string to set the braille cell to. String should have length == 1
-     * @return True if the character passed was mapped to a braille cell configuration and succesfully set.
+     * @return True if the character passed was successfully mapped to a braille cell configuration. False if otherwise.
+     * @throws BrailleCellStateException Thrown if the ID passed is out of bounds or the length of toSet != 1.
      */
-    boolean setBrailleCellState(int id, String toSet) {
-        try {
-            if (!(id >= 0 && id < brailleCells.length)) {
-                throw new SetBrailleCellStateException("The braille cell with ID " + id + " does not exist!");
+    boolean setBrailleCellState(int id, String toSet)
+            throws BrailleCellStateException {
+        if (!(id >= 0 && id < brailleCells.length)) {
+            throw new BrailleCellStateException("The braille cell with ID " + id + " does not exist!");
+        }
+        if (toSet.length() != 1) {
+            throw new BrailleCellStateException("You may only set a braille cell to 1 character.");
+        }
+        for (BrailleConvert letter : BrailleConvert.values()) {
+            if (letter.name().equalsIgnoreCase(toSet)) {
+                brailleCells[id].setPinStates(letter.getPinStates());
+                refreshBrailleCell(id);
+                return true;
             }
-            if (toSet.length() != 1) {
-                throw new SetBrailleCellStateException("You may only set a braille cell to 1 character.");
-            }
-            for (BrailleConvert letter : BrailleConvert.values()) {
-                if (letter.name().equalsIgnoreCase(toSet)) {
-                    brailleCells[id].setPinStates(letter.getPinStates());
-                    refreshBrailleCell(id);
-                    return true;
-                }
-            }
-        } catch (SetBrailleCellStateException e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -183,21 +172,14 @@ public class MainView extends JFrame{
     /**
      * Resets a SINGLE braille cell with the given ID to have all pins down.
      * @param id The ID of the braille cell to reset.
-     * @return True if the braille cell with the given ID was succesfully reset
+     * @throws BrailleCellStateException Thrown if no braille cell exists for the given ID.
      */
-    boolean resetBrailleCell(int id) {
-        try {
-            if (!(id >= 0 && id < brailleCells.length)) {
-                throw new SetBrailleCellStateException("The braille cell with ID " + id + " does not exist!");
-            } else {
-                brailleCells[id].setPinStates(BrailleConvert.RESET.getPinStates());
-                refreshBrailleCell(id);
-                return true;
-            }
-        } catch (SetBrailleCellStateException e) {
-            e.printStackTrace();
+    void resetBrailleCell(int id) throws BrailleCellStateException{
+        if (!(id >= 0 && id < brailleCells.length)) {
+            throw new BrailleCellStateException("The braille cell with ID " + id + " does not exist!");
         }
-        return false;
+        brailleCells[id].setPinStates(BrailleConvert.RESET.getPinStates());
+        refreshBrailleCell(id);
     }
 
     /**

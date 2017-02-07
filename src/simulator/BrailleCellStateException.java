@@ -7,7 +7,7 @@ package simulator;
  * USED INTERNALLY BY SIMULATOR.
  * @author Team 6, EECS 2031
  */
-class BrailleCellStateException extends Exception {
+public class BrailleCellStateException extends Exception {
 
     /**
      * Constructor that calls super.

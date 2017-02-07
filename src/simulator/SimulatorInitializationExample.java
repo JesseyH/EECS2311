@@ -13,6 +13,10 @@ public class SimulatorInitializationExample {
      */
     public static void main(String[] args) {
         SimulatorActionListenerExample simulatorActionListenerExample = new SimulatorActionListenerExample();
-        MainViewController.initialize(simulatorActionListenerExample);
+        try {
+			MainViewController.initialize(simulatorActionListenerExample);
+		} catch (SimulatorInitializationException e) {
+			e.printStackTrace();
+		}
     }
 }

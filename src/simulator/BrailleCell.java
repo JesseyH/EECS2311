@@ -1,23 +1,26 @@
 package simulator;
 
 /**
- * Model that holds the state of the pinState on one braille cell.
- * Also allows the modification of pin states.
+ * Model that holds the states of all eight pins on one braille cell.
+ * Each braille cell that exists on the screen will have a corresponding
+ * BrailleCell model instance.
+ *
+ * USED INTERNALLY BY SIMULATOR.
+ * @author Team 6, EECS 2031
  */
 class BrailleCell {
 
-    private int id;
-    private boolean[] pinState;
+    /**
+     * pinStates boolean array that stores the states of each pin.
+     */
+    private boolean[] pinStates;
 
     /**
-     * Initializes a BrailleCell object with
-     * given id and with all pinState down.
-     * @param id Id of the braille cell.
+     * Initializes a BrailleCell instance with
+     * all pins initially down.
      */
-    BrailleCell(int id) {
-        this.id = id;
-        pinState = new boolean[] {false, false, false, false, false, false, false, false};
-        System.out.println("Braille cell model object with id "+ id +" created.");
+    BrailleCell() {
+        pinStates = new boolean[] {false, false, false, false, false, false, false, false};
     }
 
     /**
@@ -25,7 +28,7 @@ class BrailleCell {
      * @param pinStates The boolean array containing states of each pin.
      */
     void setPinStates(boolean[] pinStates) {
-        this.pinState = pinStates;
+        this.pinStates = pinStates;
     }
 
     /**
@@ -34,7 +37,7 @@ class BrailleCell {
      * @return PinStates boolean array.
      */
     boolean[] getPinStates() {
-        return pinState;
+        return pinStates;
     }
 
 }

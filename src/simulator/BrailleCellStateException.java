@@ -2,9 +2,12 @@ package simulator;
 
 /**
  * Exception should be thrown when there is an issue
- * with setting a braille cell state.
+ * with setting or getting a braille cell state.
+ *
+ * USED INTERNALLY BY SIMULATOR.
+ * @author Team 6, EECS 2031
  */
-class BrailleCellStateException extends Exception{
+class BrailleCellStateException extends Exception {
 
     /**
      * Constructor that calls super.

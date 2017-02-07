@@ -5,7 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-@SuppressWarnings("serial")
+/**
+ * MainView sets up the entire simulator interface and ties all components together.
+ * The MainView is the main simulator interface. In this class the button objects are
+ * created and attached to the main view along with each braille cell being created
+ * and attached as well.
+ *
+ * USED INTERNALLY BY SIMULATOR.
+ * @author Team 6, EECS 2031
+ */
 public class MainView extends JFrame{
 
 	/**
@@ -14,18 +22,15 @@ public class MainView extends JFrame{
     private MainViewController controller;
     private ActionListener listener;
 
-    private int BUTTON_SIZE_X = 50;
-	private int BUTTON_SIZE_Y = 50;
+    private JButton[] buttons;
 
-	private BrailleCellView[] brailleCellViews;
+    private BrailleCellView[] brailleCellViews;
 	private BrailleCell[] brailleCells;
 
-	private JButton[] buttons;
-	private JPanel cellPanel;
-	private JPanel buttonPanel;
-
     /**
-     * Constructor for the SimulatorInitializationExample view
+     * Constructor for the MainView.
+     * @param controller The controller instance controlling this view.
+     * @param listener The ActionLister instance that will handle button presses.
      */
     MainView(MainViewController controller, ActionListener listener) {
 		super("Braille SimulatorActionListenerExample");
@@ -37,12 +42,25 @@ public class MainView extends JFrame{
 	}
 
     /**
-     * Creates the given amount of braille brailleCellViews.
+     * Packs the layout and draws the view to the screen.
+     * Is called by the controller after all cells and buttons
+     * are created.
+     */
+    void drawView() {
+        pack();
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setVisible(true);
+    }
+
+    /**
+     * Creates the given amount of braille cells by creating BrailleCellView objects
+     * and attaching them to the main view. This method also instantiates a BrailleCell
+     * model instance for every BrailleCellView created.
      * @param cellsToMake The amount of braille brailleCellViews to make.
      */
     void makeCells(int cellsToMake) {
 		brailleCells = new BrailleCell[cellsToMake];
-        cellPanel = new JPanel();
+        JPanel cellPanel = new JPanel();
         brailleCellViews = new BrailleCellView[cellsToMake];
 
 		for (int i = 0; i < cellsToMake; i++) {
@@ -54,12 +72,13 @@ public class MainView extends JFrame{
 
     /**
      * Called when a braille cell is initialized.
-     * This method will create the corresponding BrailleCell model instance.
+     * This method will create the corresponding BrailleCell model instance
+     * and insert it into the array holding all instances.
      * @param id The id of the braille cell that was initialized.
      * @return The BrailleCell model object that was created.
      */
     private BrailleCell createdBrailleCell(int id) {
-        brailleCells[id] = new BrailleCell(id);
+        brailleCells[id] = new BrailleCell();
         return brailleCells[id];
     }
 
@@ -68,14 +87,16 @@ public class MainView extends JFrame{
      * @param buttonsToMake The amount of buttons to create.
      */
     void makeButtons(int buttonsToMake) {
-        buttonPanel = new JPanel();
-	    buttons = new JButton[buttonsToMake];
+        JPanel buttonPanel = new JPanel();
+        buttons = new JButton[buttonsToMake];
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i] = new JButton();
 			buttons[i].setText("" + i);
 			buttons[i].setActionCommand("BUTTON " + i);
 			buttons[i].addActionListener(listener);
-			buttons[i].setPreferredSize(new Dimension(BUTTON_SIZE_X, BUTTON_SIZE_Y));
+            int BUTTON_SIZE_X = 50;
+            int BUTTON_SIZE_Y = 50;
+            buttons[i].setPreferredSize(new Dimension(BUTTON_SIZE_X, BUTTON_SIZE_Y));
 			buttons[i].setMaximumSize(new Dimension(BUTTON_SIZE_X, BUTTON_SIZE_Y));
 
 			buttonPanel.add(buttons[i]);
@@ -83,9 +104,17 @@ public class MainView extends JFrame{
 		add(buttonPanel);
 	}
 
+    /**
+     * Returns how many buttons have been initialized on the view.
+     * @return Integer number representing how many buttons there are.
+     */
+	int getAmtOfButtons() {
+        return buttons.length;
+    }
 
     /**
      * Returns how many braille cells have been initialized on the view.
+     * ID's of braille cells ALWAYS range from [ 0 ] to [ getAmtOfBrailleCells -1 ].
      * @return Integer number representing how many braille cells there are.
      */
     int getAmtOfBrailleCells() {
@@ -93,32 +122,26 @@ public class MainView extends JFrame{
     }
 
     /**
-     * Packs the layout and draws the view to the screen.
-     */
-    void drawView() {
-        pack();
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        setVisible(true);
-    }
-
-    /**
      * Gets the pinStates boolean array containing the values
-     * of every pin for the braille cell with the given ID.     *
+     * of every pin for the braille cell with the given ID.
      * @param id The ID Of the braille cell.
-     * @return The pinStates boolean array or NULL if the ID passed
-     * is not being used by any braille cell.
+     * @return The pinStates boolean array.
+     * @throws BrailleCellStateException Thrown when the ID is out of bounds.
      */
-    boolean[] getBrailleCellState(int id) {
-        if(id >= 0 && id < brailleCells.length) {
-            return brailleCells[id].getPinStates();
+    boolean[] getBrailleCellState(int id) throws BrailleCellStateException {
+        if(!(id >= 0 && id < brailleCells.length)) {
+            throw new BrailleCellStateException("The braille cell with ID " + id + " does not exist!");
         }
-        return null;
+        return brailleCells[id].getPinStates();
     }
 
     /**
-     * Sets the specified braille cell to the given pin states.
+     * Sets the braille cell with the given ID to the given pinStates
+     * boolean array.
      * @param id The ID of the braille cell.
-     * @param pinStates The boolean array containing pin states of all 8 pins.
+     * @param pinStates The pinStates boolean array to set.
+     * @throws BrailleCellStateException Thrown if the ID is out of bounds or
+     * the pinStates boolean array has a length that is != 8.
      */
     void setBrailleCellState(int id, boolean[] pinStates)
             throws BrailleCellStateException{

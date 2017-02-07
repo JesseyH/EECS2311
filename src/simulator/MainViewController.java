@@ -5,11 +5,15 @@ import java.awt.event.ActionListener;
 /**
  * This controller can be used to control any aspect of the simulator.
  *
- * Use MainViewController.initialize(actionListener); and pass in an action listener to initialize the simulator
- * and also obtain an instance of the controller used to control the simulator.
+ * Use MainViewController.initialize(actionListener); and pass in an action listener to initialize the simulator and
+ * its controller. The controller instance that was initialized will then be returned. It is recommended to save
+ * the controller instance returned in a static variable for later use. This saves you from using getController()
+ * repeatedly.
+ *
  * For every other time you require access to the controller, use MainViewController.getController();
  *
  * SEE EXAMPLES: SimulatorInitializationExample and SimulatorActionListenerExample
+ * @author Team 6, EECS 2031
  */
 public class MainViewController {
 
@@ -28,7 +32,9 @@ public class MainViewController {
      * with the amount of braille cells and buttons specified in Settings.
      * Player should call initialize() method instead of using this constructor.
      *
-     * @param listener The ActionListener that will be applied to every button.
+     * @param listener The ActionListener that will be attached to every button.
+     * @throws SimulatorInitializationException Thrown either when the simulator has already been
+     * initialized, or the ActionListener passed is null.
      */
     private MainViewController(ActionListener listener) throws SimulatorInitializationException {
         if(mainViewController != null) {
@@ -46,11 +52,14 @@ public class MainViewController {
     /**
      * Private constructor for the MainViewController that initializes the view
      * with the specified amount of braille cells and buttons.
-     * @param listener The ActionListener that will be applied to every button.
+     * @param listener The ActionListener that will be attached to every button.
      * @param numOfCells The number of braille cells to initialize the view with.
      * @param numOfButtons The number of buttons to initialize the view with.
+     * @throws SimulatorInitializationException Thrown either when the simulator has already been initialized,
+     * the ActionHandler passed is null, the braille cell amount is <= 0, or the button amount is <= 0.
      */
-    private MainViewController(ActionListener listener, int numOfCells, int numOfButtons) throws SimulatorInitializationException {
+    private MainViewController(ActionListener listener, int numOfCells, int numOfButtons)
+            throws SimulatorInitializationException {
         if(mainViewController != null) {
             throw new SimulatorInitializationException("The simulator has already been initialized!");
         }
@@ -76,8 +85,6 @@ public class MainViewController {
      *
      * @param listener The ActionListener to bind to the simulator buttons.
      * @return The newly created simulator's controller, which is an instance of MainViewController.
-     * @throws SimulatorInitializationException Exception thrown when the ActionListener passed is null or
-     * the simulator has already been initialized.
      */
     public static MainViewController initialize(ActionListener listener) {
         try {
@@ -96,8 +103,6 @@ public class MainViewController {
      *
      * @param listener The ActionListener to bind to the simulator buttons.
      * @return The newly created simulator's controller, which is an instance of MainViewController.
-     * @throws SimulatorInitializationException Exception thrown when either the ActionListener passed is null,
-     * the simulator has already been initialized, the number of braille cells is <= 0, or the number of buttons is <= 0.
      */
     public static MainViewController initialize(ActionListener listener, int numOfCells, int numOfButtons) {
         try {
@@ -118,21 +123,25 @@ public class MainViewController {
      */
     public static MainViewController getController() throws SimulatorInitializationException {
         if(mainViewController == null) {
-                throw new SimulatorInitializationException("SimulatorActionListenerExample has not been initialized! Please call initialize() method.");
+                throw new SimulatorInitializationException("Simulator has not been initialized! " +
+                        "Please call initialize() method.");
         }
         return mainViewController;
     }
 
+    /**
+     * Returns how many buttons have been initialized on the view.
+     * @return Integer number representing how many buttons there are.
+     */
+    public int getAmtOfButtons() {
+        return view.getAmtOfButtons();
+    }
 
     /**
      * Returns how many braille cells have been initialized on the view.
      * @return Integer number representing how many braille cells there are.
-     * @throws SimulatorInitializationException Thrown when the simulator has not been initialized.
      */
-    public int getAmtOfBrailleCells() throws SimulatorInitializationException {
-        if(mainViewController == null) {
-            throw new SimulatorInitializationException("SimulatorActionListenerExample has not been initialized! Please call initialize() method.");
-        }
+    public int getAmtOfBrailleCells() {
         return view.getAmtOfBrailleCells();
     }
 
@@ -146,7 +155,7 @@ public class MainViewController {
      * @return The pinStates boolean array or NULL if the ID passed
      * is not being used by any braille cell.
      */
-	public boolean[] getBrailleCellState(int id) {
+	public boolean[] getBrailleCellState(int id) throws BrailleCellStateException {
 	    return view.getBrailleCellState(id);
     }
 
@@ -167,16 +176,17 @@ public class MainViewController {
 	 * @param pinStates The boolean array containing pin states of all 8 pins.
      * @throws BrailleCellStateException Thrown if the ID passed is out of bounds or the length of pinStates != 8.
 	 */
-	public void setBrailleCellState(int id, boolean[] pinStates)
-            throws BrailleCellStateException {
+	public void setBrailleCellState(int id, boolean[] pinStates) throws BrailleCellStateException {
 		view.setBrailleCellState(id, pinStates);
 	}
 
 	/**
-	 * Sets the braille cell with the given ID to the character passed.
+	 * Sets the braille cell with the given ID to the string passed.
      *
      * ID's of braille cells ALWAYS range from: [ 0 ] to [ getAmtOfBrailleCells() - 1 ]
-     * The toSet String passed to this method must have a length of 1.
+     * The toSet String passed to this method must have a length of 1. Only letters [ A ] to [ Z ]
+     * will work and will cause the method to return true. All other characters passed will
+     * make the method return false.
      *
 	 * @param id The ID of the braille cell to set.
 	 * @param toSet The string to set the braille cell to. String should have length == 1
@@ -199,7 +209,7 @@ public class MainViewController {
     }
 
 	/**
-	 * Resets all braille cells to have all pins down.
+	 * Resets ALL braille cells to have all pins down.
      *
      * @return How many braille cells were reset.
 	 */

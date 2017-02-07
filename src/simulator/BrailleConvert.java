@@ -2,8 +2,12 @@ package simulator;
 
 /**
  * Enum that maps characters to braille.
- * You can get the pin states boolean array for any letter by calling
- * BrailleConvert.LETTER_HERE.getPinStates();
+ * Simulator gets the pin states boolean array for any letter by calling
+ * BrailleConvert.CHAR_HERE.getPinStates(); where 'CHAR_HERE' is the character
+ * that needs to be converted.
+ *
+ * USED INTERNALLY BY SIMULATOR.
+ * @author Team 6, EECS 2031
  */
 public enum BrailleConvert {
 
@@ -35,6 +39,7 @@ public enum BrailleConvert {
     X(new boolean[] {true, false, true, false, true, false, true, false}),
     Y(new boolean[] {true, false, true, false, true, true, true, false}),
     Z(new boolean[] {true, false, true, false, true, true, false, false}),
+
     RESET(new boolean[] {false, false, false, false, false, false, false, false});
 
     private boolean[] pinStates;

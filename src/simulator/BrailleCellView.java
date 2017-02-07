@@ -6,17 +6,29 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
+/**
+ * This class is the JPanel for a single braille cell presented on the screen.
+ * The BrailleCellView JPanel manages drawing and refreshing of the eight pins
+ * in one braille cell.
+ *
+ * USED INTERNALLY BY SIMULATOR.
+ * @author Team 6, EECS 2031
+ */
 class BrailleCellView extends JPanel {
 
+    /**
+     * Instance variables.
+     */
     private BrailleCell brailleCell;
 	private JLabel pin[] = new JLabel[8];
 	private ImageIcon lowered = new ImageIcon(getClass().getResource("/lowered.png"));
 	private ImageIcon raised = new ImageIcon(getClass().getResource("/raised.png"));
 
-	/**
-	 * Constructor for the braille cell view.
-	 */
+    /**
+     * Constructor for a BrailleCellView.
+     * @param brailleCell The brailleCell model object that stores the states of each pin
+     *                    on this braille cell.
+     */
 	BrailleCellView(BrailleCell brailleCell) {
 		super();
 		this.brailleCell = brailleCell;
@@ -31,7 +43,10 @@ class BrailleCellView extends JPanel {
 	}
 
 	/**
-	 * Creates the JLabels that represent each pin.
+	 * Creates two columns of type JPanel and then inserts
+     * 4 JLabels in each column. Each JLabel represents a pin
+     * and both columns combined (each with 4 pins) creates a braille
+     * cell.
 	 */
 	private void makePin() {
         JPanel col1 = new JPanel();
@@ -56,7 +71,9 @@ class BrailleCellView extends JPanel {
 	}
 
     /**
-     * Draws the proper background on each pin depending on state.
+     * Refreshes all the pins within a braille cell to either be raised
+     * or lowered depending on the pinStates configuration contained within
+     * the BrailleCell model instance.
      */
     void refreshPins() {
         boolean[] pinState = brailleCell.getPinStates();

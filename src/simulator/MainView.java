@@ -14,7 +14,7 @@ import javax.swing.*;
  * USED INTERNALLY BY SIMULATOR.
  * @author Team 6, EECS 2031
  */
-public class MainView extends JFrame{
+class MainView extends JFrame{
 
 	/**
 	 * Instance Variables

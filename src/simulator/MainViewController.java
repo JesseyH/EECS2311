@@ -56,7 +56,8 @@ public class MainViewController {
      * @param numOfCells The number of braille cells to initialize the view with.
      * @param numOfButtons The number of buttons to initialize the view with.
      * @throws SimulatorInitializationException Thrown either when the simulator has already been initialized,
-     * the ActionHandler passed is null, the braille cell amount is <= 0, or the button amount is <= 0.
+     * the ActionHandler passed is null, the braille cell amount is less than or equal to 0,
+     * or the button amount is less than or equal to 0.
      */
     private MainViewController(ActionListener listener, int numOfCells, int numOfButtons)
             throws SimulatorInitializationException {
@@ -102,6 +103,8 @@ public class MainViewController {
      * on the simulator.
      *
      * @param listener The ActionListener to bind to the simulator buttons.
+     * @param numOfCells The number of braille cells to generate on the simulator.
+     * @param numOfButtons The number of buttons to generate on the simulator.
      * @return The newly created simulator's controller, which is an instance of MainViewController.
      */
     public static MainViewController initialize(ActionListener listener, int numOfCells, int numOfButtons) {
@@ -152,8 +155,8 @@ public class MainViewController {
      * ID's of braille cells ALWAYS range from: [ 0 ] to [ getAmtOfBrailleCells() - 1 ]
      *
      * @param id The ID Of the braille cell.
-     * @return The pinStates boolean array or NULL if the ID passed
-     * is not being used by any braille cell.
+     * @return The pinStates boolean array for the specified braille cell
+     * @throws BrailleCellStateException Thrown if the braille cell ID passed is out of bounds.
      */
 	public boolean[] getBrailleCellState(int id) throws BrailleCellStateException {
 	    return view.getBrailleCellState(id);

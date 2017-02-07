@@ -9,7 +9,7 @@ package simulator;
  * USED INTERNALLY BY SIMULATOR.
  * @author Team 6, EECS 2031
  */
-public enum BrailleConvert {
+enum BrailleConvert {
 
     A(new boolean[] {true, false, false, false, false, false, false, false}),
     B(new boolean[] {true, true, false, false, false, false, false, false}),

@@ -6,10 +6,10 @@ package simulator;
  * BrailleConvert.CHAR_HERE.getPinStates(); where 'CHAR_HERE' is the character
  * that needs to be converted.
  *
- * USED INTERNALLY BY SIMULATOR.
+ * USED INTERNALLY BY SIMULATOR, public for testing purposes.
  * @author Team 6, EECS 2031
  */
-enum BrailleConvert {
+public enum BrailleConvert {
 
     A(new boolean[] {true, false, false, false, false, false, false, false}),
     B(new boolean[] {true, true, false, false, false, false, false, false}),
